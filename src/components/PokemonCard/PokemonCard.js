@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+import { HorizontalBar } from 'react-chartjs-2';
+
 import Card from 'react-bootstrap/Card';
 import Badge from 'react-bootstrap/Badge';
 
@@ -17,6 +19,7 @@ export default (props) => {
   });
 
   const [loadingInfo, setLoadingInfo] = useState(true);
+  const [detailVisible, setDetailVisible] = useState(false);
 
   useEffect(() => {
     const loadPokemonInfo = async () => {
@@ -61,8 +64,33 @@ export default (props) => {
         stat: currentStats.base_stat
       }))
 
+    const chartData = {
+      labels: statsMapped.map(currentStat => currentStat.name),
+      datasets: [{
+        label: name,
+        data: statsMapped.map(currentStat => currentStat.stat),
+      }]
+    }
+
+    const chartOptions = {
+      scales: {
+        xAxes: [{
+          ticks: {
+            min: 0,
+            max: 200
+          }
+        }],
+        yAxes: [{
+            stacked: true
+        }]
+      }
+    }
+
     return (
-      <div className={`pokemon-card__content bg-${typesMapped[0]}`}>
+      <div
+        className={`pokemon-card__content bg-${typesMapped[0]} ${detailVisible ? '--detail-open' : ''}`}
+        onClick={() => (setDetailVisible(!detailVisible))}
+      >
         <img
           className="pokemon-card__content__image"
           alt={`Imagem do ${name}`}
@@ -84,6 +112,12 @@ export default (props) => {
             )) }
           </Card.Body>
         </Card>
+        <div className="pokemon-card__content__detail">
+          <HorizontalBar
+            data={chartData}
+            options={chartOptions}
+          />
+        </div>
       </div>
     )
   }

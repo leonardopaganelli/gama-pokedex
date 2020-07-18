@@ -6,6 +6,10 @@
   color: #fff;
 }
 
+.pokemon-card__content.--detail-open .card {
+  border-radius: 10px 10px 0 0;
+}
+
 .pokemon-card .card-body {
   padding: 0;
 }
@@ -41,14 +45,16 @@
 
 }
 
-.pokemon-card__content:hover > .card {
+.pokemon-card__content:hover > .card,
+.pokemon-card__content.--detail-open > .card {
   filter: drop-shadow(2px 4px 6px black);
   background-color: inherit;
   box-shadow: none;
   border: 0;
 }
 
-.pokemon-card__content:hover > .card:before {
+.pokemon-card__content:hover > .card:before,
+.pokemon-card__content.--detail-open > .card:before {
   content: none;
 }
 
@@ -61,7 +67,8 @@
   cursor: pointer;
 }
 
-.pokemon-card__content:hover > .pokemon-card__content__image {
+.pokemon-card__content:hover > .pokemon-card__content__image,
+.pokemon-card__content.--detail-open > .pokemon-card__content__image {
   filter: brightness(1);
 }
 
@@ -70,6 +77,8 @@
   display: none;
 }
 
+.pokemon-card__content.--detail-open .pokemon-card__content__info,
+.pokemon-card__content.--detail-open .pokemon-card__content__type.badge,
 .pokemon-card__content:hover .pokemon-card__content__info,
 .pokemon-card__content:hover .pokemon-card__content__type.badge {
   display: revert;
@@ -94,4 +103,23 @@
   background-image: url('../../assets/images/icon-pokeball.png');
   position: absolute;
   top: 20px;
+}
+
+.pokemon-card__content__detail {
+  position: absolute;
+  margin-top: 94px;
+  width: 100%;
+  height: 0;
+  overflow-y: hidden;
+  transition: 0.3s linear height;
+  background-color: #fff;
+  z-index: 3;
+  border-radius: 0 0 10px 10px;
+  border-top: none;
+  color: #fff;
+}
+
+.pokemon-card__content.--detail-open .pokemon-card__content__detail {
+  height: fit-content;
+  border: #000 solid 1px;
 }
