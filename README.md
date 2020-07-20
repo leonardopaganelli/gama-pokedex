@@ -159,11 +159,11 @@ Será retornado um objeto com diversas propriedades, mas usaremos apenas alguns,
 *dentro de sprites temos diversas imagens sendo elas.
 * `back_default` - imagem de costas do pokemon (caso o pokemon tenha diferença de gênero, essa será a imagem do gênero masculino)
 * `back_female` - imagem de costas do pokemon do gênero feminino (caso o pokemon não tenha diferença de gênero virá null)
-* `back_shiny` - imagem de costas do pokemon shiny (caso o pokemon tenha diferença de gênero, essa será a imagem do gênero masculino),
+* `back_shiny` - imagem de costas do pokemon shiny (caso o pokemon tenha diferença de gênero, essa será a imagem do gênero masculino)
 * `back_shiny_female` - imagem de costas do pokemon shiny do gênero feminino (caso o pokemon não tenha diferença de gênero virá null)
 * `front_default` - imagem de frente do pokemon (caso o pokemon tenha diferença de gênero, essa será a imagem do gênero masculino)
-* `front_female` - imagem de frente do pokemon do gênero feminino (caso o pokemon tenha diferença de gênero, essa será a imagem do gênero masculino),
-* `front_shiny` - imagem de frente do pokemon shiny (caso o pokemon tenha diferença de gênero, essa será a imagem do gênero masculino),
+* `front_female` - imagem de frente do pokemon do gênero feminino (caso o pokemon tenha diferença de gênero, essa será a imagem do gênero masculino)
+* `front_shiny` - imagem de frente do pokemon shiny (caso o pokemon tenha diferença de gênero, essa será a imagem do gênero masculino)
 * `front_shiny_female` - imagem de frente do pokemon shiny do gênero feminino (caso o pokemon não tenha diferença de gênero virá null)
 
 
