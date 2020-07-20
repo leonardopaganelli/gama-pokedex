@@ -1,68 +1,202 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Desafio Gama Experience - edição #34x
 
-## Available Scripts
+O desafio consiste em consumir uma api com dados de pokemons, mostrar os dados e implementar um gráfico qualquer.
 
-In the project directory, you can run:
+**Utilizando as seguintes bibliotecas**:
+* [React JS](https://pt-br.reactjs.org/) - Por ser requisito do desafio, para criar uma single page application
+* [Bootstrap](https://getbootstrap.com/docs/4.4/getting-started/introduction/) - Para estilização e uso dos componentes
+* [React Bootstrap](https://react-bootstrap.github.io/) - Para facilitar o uso do bootstrap com o React
+* [Chart JS](https://www.chartjs.org/) - Para construção do gráfico
+* [Axios](https://github.com/axios/axios) - Para consumo de apis
 
-### `yarn start`
+## Dados utilizados
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Os dados foram obtidos através da [api de pokemons](https://pokeapi.co) e foram utilizadas duas apis para a resolução do desafio:
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+### [Listar os pokemons](https://pokeapi.co/api/v2/pokemon)
 
-### `yarn test`
+```bash
+$ curl --request GET \
+    --url https://pokeapi.co/api/v2/pokemon?offset=${OFFSET}&limit=${LIMIT}
+```
+ou
+```javascript
+axios
+  .get(
+    'https://pokeapi.co/api/v2/pokemon',
+    {
+      offset: ${OFFSET},
+      limit: ${LIMIT}
+    }
+  ),
+```
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**parâmetros**:
+* OFFSET: início da listagem
+* LIMIT: quantidade de dados para serem retornados
 
-### `yarn build`
+####  O retorno
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Sempre será retorado um objeto com a quantidade total de pokemons (`count`), a url para próxima página (`next`), a url para a página anterior (`previous`) e uma lista com os pokemons, contentdo o nome (`name`) e a url para delhes(`url`)
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+```json
+   {
+      "count": 964,
+      "next": "https://pokeapi.co/api/v2/pokemon?offset=20&limit=20",
+      "previous": null,
+      "results": [
+        {
+          "name": "bulbasaur",
+          "url": "https://pokeapi.co/api/v2/pokemon/1/"
+        },
+        {
+          "name": "ivysaur",
+          "url": "https://pokeapi.co/api/v2/pokemon/2/"
+        },
+        ...
+      ]
+     }
+   }
+ ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### [Listar os detalhes do pokemon](https://pokeapi.co/api/v2/pokemon/pikachu)
 
-### `yarn eject`
+```bash
+$ curl --request GET \
+    --url https://pokeapi.co/api/v2/${SPECIFIC_POKEMON}
+```
+OU
+```javascript
+axios
+  .get(
+    `https://pokeapi.co/api/v2/${SPECIFIC_POKEMON}`,
+  ),
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+**parâmetros**:
+* SPECIFIC_POKEMON: id ou nome do pokemon
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### O retorno
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Será retornado um objeto com diversas propriedades, mas usaremos apenas alguns, dentre eles o nome (`name`), a imagem (`sprites`), os tipos (`types`), o número (`id`), e os atributos (`stats`)
+```json
+   {
+      "id": 35,
+      "name": "pikachu",
+      "sprites": {
+        "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/25.png",
+        "back_female": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/female/25.png",
+        "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/25.png",
+        "back_shiny_female": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/female/25.png",
+        "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png",
+        "front_female": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/female/25.png",
+        "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/25.png",
+        "front_shiny_female": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/female/25.png"
+      },
+      "stats": [
+        {
+          "base_stat": 35,
+          "effort": 0,
+          "stat": {
+            "name": "hp",
+            "url": "https://pokeapi.co/api/v2/stat/1/"
+          }
+        },
+        {
+          "base_stat": 55,
+          "effort": 0,
+          "stat": {
+            "name": "attack",
+            "url": "https://pokeapi.co/api/v2/stat/2/"
+          }
+        },
+        {
+          "base_stat": 40,
+          "effort": 0,
+          "stat": {
+            "name": "defense",
+            "url": "https://pokeapi.co/api/v2/stat/3/"
+          }
+        },
+        {
+          "base_stat": 50,
+          "effort": 0,
+          "stat": {
+            "name": "special-attack",
+            "url": "https://pokeapi.co/api/v2/stat/4/"
+          }
+        },
+        {
+          "base_stat": 50,
+          "effort": 0,
+          "stat": {
+            "name": "special-defense",
+            "url": "https://pokeapi.co/api/v2/stat/5/"
+          }
+        },
+        {
+          "base_stat": 90,
+          "effort": 2,
+          "stat": {
+            "name": "speed",
+            "url": "https://pokeapi.co/api/v2/stat/6/"
+          }
+        }
+      ],
+      "types": [
+        {
+          "slot": 1,
+          "type": {
+            "name": "electric",
+            "url": "https://pokeapi.co/api/v2/type/13/"
+          }
+        }
+      ],
+   }
+ ```
 
-## Learn More
+*dentro de sprites temos diversas imagens sendo elas.
+* `back_default` - imagem de costas do pokemon (caso o pokemon tenha diferença de gênero, essa será a imagem do gênero masculino)
+* `back_female` - imagem de costas do pokemon do gênero feminino (caso o pokemon não tenha diferença de gênero virá null)
+* `back_shiny` - imagem de costas do pokemon shiny (caso o pokemon tenha diferença de gênero, essa será a imagem do gênero masculino),
+* `back_shiny_female` - imagem de costas do pokemon shiny do gênero feminino (caso o pokemon não tenha diferença de gênero virá null)
+* `front_default` - imagem de frente do pokemon (caso o pokemon tenha diferença de gênero, essa será a imagem do gênero masculino)
+* `front_female` - imagem de frente do pokemon do gênero feminino (caso o pokemon tenha diferença de gênero, essa será a imagem do gênero masculino),
+* `front_shiny` - imagem de frente do pokemon shiny (caso o pokemon tenha diferença de gênero, essa será a imagem do gênero masculino),
+* `front_shiny_female` - imagem de frente do pokemon shiny do gênero feminino (caso o pokemon não tenha diferença de gênero virá null)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+![back_default](https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/25.png)
+![back_female](https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/female/25.png)
+![back_shiny](https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/25.png),
+![back_shiny_female](https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/female/25.png),
+![front_default](https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png),
+![front_female](https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/female/25.png)
+![front_shiny](https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/25.png),
+![front_shiny_female](https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/female/25.png)
 
-### Code Splitting
+## Subir o projeto
+Para subir o projeto é necessário ter o [node](https://nodejs.org/en/) instalado no seu computador.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+Com o projeto em seu computador, é necessário rodar o comando `npm install` para instalar as dependências do projeto.
 
-### Analyzing the Bundle Size
+Tendo as dependências instaladas com sucesso temos os seguintes scripts dentro do package.json:
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+* <b>start</b> - compila o projeto e o disponibiliza no endereço `localhost:3000`;
+* <b>build</b> - compila o projeto e gera o resultado dentro da pasta build;
+* <b>test</b> - roda os testes unitários do projeto;
 
-### Making a Progressive Web App
+## Resultado final
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+O exemplo pode ser acessado [aqui](https://leonardopaganelli.github.io/gama-pokedex/build/) ou clonando o projeto e abrindo o arquivo index.html por qualquer navegador.
 
-### Advanced Configuration
+![Resultado final](/gama-pokedex.gif)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+## Pendências futuras
 
-### Deployment
+- [ ] Implementar testes
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+## Agradecimentos
 
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+[Raphael de Falco Ayres](https://www.linkedin.com/in/raphael-de-falco-ayres-6b053826/), por inspirar com o layout do [projeto que ele fez](https://xenodochial-carson-62f014.netlify.app/)
