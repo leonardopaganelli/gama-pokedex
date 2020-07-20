@@ -1,8 +1,12 @@
 .pokemon-card-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  padding-bottom: 30px;
   gap: 15px;
+  width: 100%;
+  overflow: auto;
+  height: 100vh;
+  padding: 24px;
+  margin-bottom: 0;
 }
 
 ul {

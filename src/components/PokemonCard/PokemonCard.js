@@ -32,7 +32,10 @@ export default (props) => {
     loadPokemonInfo();
   }, []);
 
-  const formatOrder = (order) => `#${String(order).padStart(3, '0')}`;
+  const formatOrder = (order) => order < 1000
+      ? `#${String(order).padStart(3, '0')} - `
+      : '';
+
   const capitalizeText = (text) => `${text.charAt(0).toUpperCase()}${text.slice(1)}`;
 
   const loadingContent = () => (
@@ -77,7 +80,7 @@ export default (props) => {
         xAxes: [{
           ticks: {
             min: 0,
-            max: 200
+            max: 255
           }
         }],
         yAxes: [{
@@ -99,12 +102,12 @@ export default (props) => {
         <Card>
           <Card.Body>
             <div className="pokemon-card__content__info">
-              { `${formatOrder(id)} - ${capitalizeText(name)}` }
+              { `${formatOrder(id)}${capitalizeText(name)}` }
             </div>
 
             { typesMapped.map(type => (
               <Badge
-                pill
+                key={type}
                 className="pokemon-card__content__type"
               >
                 { type }

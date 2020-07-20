@@ -1,0 +1,29 @@
+.generation-filter {
+  display: grid;
+  list-style: none;
+  margin-bottom: 0;
+  align-items: center;
+  text-align: center;
+  width: 20%;
+  background-color: #ed3e37;
+  border-right: solid 10px #333333;
+  position: relative;
+}
+
+.generation-filter:after {
+  content: '';
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  background-color: #fff;
+  border-radius: 50%;
+  right: -28px;
+  border: solid 8px #333333;
+}
+
+.generation-filter__item__button{
+  font-size: 14px;
+  cursor: pointer;
+  color: #fff;
+  font-weight: 600;
+}

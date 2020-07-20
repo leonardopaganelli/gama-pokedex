@@ -65,6 +65,8 @@
   filter: brightness(0);
   transition: 0.3s linear filter;
   cursor: pointer;
+  max-width: 90px;
+  max-height: 90px;
 }
 
 .pokemon-card__content:hover > .pokemon-card__content__image,
